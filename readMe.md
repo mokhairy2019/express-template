@@ -10,7 +10,7 @@
 
     - calling next(error) will pass the error to the centralized error handling middleware automatically.
     - note that express will automatically pass any error that happens in a non async function to next(error) hence we have to only worry about errors happening in an a async functions (like the controllers).. this is mitigated by wrapping the controllers in "asyncHandler" which catches the error and pass it to next(error)
-    -So.. throwing errors inside the controllers will also pass the error to the error handling middleware automatically (because of the asyncHandler wrapper that wraps all controllers)
+    - so.. throwing errors inside the controllers will also pass the error to the error handling middleware automatically (because of the asyncHandler wrapper that wraps all controllers)
     - throwing errors inside middleware might not pass the error to the error handling  middleware automatically, so it's better to call next(error) instead of throwing the error (since they are not wrapped in "asyncHandler")
     - in this codebase we usually throw errors inside services which are usually called from inside controllers, so the errors will be passed to error handling middleware automatically (no need to try catch inside controllers .. this leads to cleaner controller code)
     - if a service is called somewhere else (a middleware for example) you must try/catch the service call and call next(error) if an error is thrown
