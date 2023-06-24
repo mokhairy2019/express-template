@@ -1,22 +1,22 @@
-import { Request, Response, NextFunction } from "express";
-import {
-  index,
-  show,
-  create,
-  remove,
-  update,
-} from "@/services/product.service";
-import { asyncHandler } from "@/utils/asyncHandler";
-
-import IResponse from "@/types/Response";
-import { IProduct } from "@/types/product";
 import {
   ICreateProductBody,
   IDeleteProductParams,
   IGetProductParams,
-  IUpdateProductParams,
   IUpdateProductBody,
+  IUpdateProductParams,
 } from "@/validations/product.validation";
+import { NextFunction, Request, Response } from "express";
+import {
+  create,
+  index,
+  remove,
+  show,
+  update,
+} from "@/services/product.service";
+
+import { IProduct } from "@/types/product";
+import IResponse from "@/types/Response";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 export const getAllProductsHandler = asyncHandler(
   async (_req: Request, res: Response) => {
@@ -43,8 +43,8 @@ export const createProductHandler = asyncHandler(
     res: Response<IResponse>
   ) => {
     const product: Omit<IProduct, "id"> = {
-      name: req.body.name as string,
-      price: req.body.price as unknown as number,
+      name: req.body.name,
+      price: req.body.price,
     };
 
     const newProduct = await create(product);
